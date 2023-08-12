@@ -1,0 +1,30 @@
+---
+  - name: Install httpd using yum and start snmpd
+    hosts: test
+    become: yes
+    vars_prompt:
+      - name: "keypair"
+        prompt: "Enter Key"
+      - name: "username"
+        prompt: "Enter User" 
+
+    tasks:
+      - name: Add Group and User 
+        user:
+          name: "{{ username }}"
+          comment: "Test User"
+          uid: 2567
+      - name: Add RSA Keys
+        debug:
+          msg: 'keypair is : {{ keypair }}'
+      - name: Add RSA Public Key
+        authorized_key:
+          user: "{{ username }}"
+          state: present
+          key: "{{ keypair }}"
+
+      - name: Patch the Server
+        yum:
+          name: "*"
+          state: latest
+...
