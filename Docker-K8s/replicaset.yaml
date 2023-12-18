@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: httpd
-          image: susigugh/httpdimg:v1.0
+          image: bishaldhimal/bishalnginximg
   selector:
     matchLabels:
       app: httpd
